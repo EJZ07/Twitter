@@ -12,11 +12,14 @@ import com.codepath.apps.restclienttemplate.models.Tweet
 
 class TweetsAdapter(val tweets: ArrayList<Tweet>) : RecyclerView.Adapter<TweetsAdapter.ViewHolder>() {
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TweetsAdapter.ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
 
         val view = inflater.inflate(R.layout.item_tweet, parent, false)
+
 
         return ViewHolder(view)
     }
@@ -29,6 +32,8 @@ class TweetsAdapter(val tweets: ArrayList<Tweet>) : RecyclerView.Adapter<TweetsA
         // Set item views based on views and data model
 
         holder.tvUserName.text = tweet.user?.name
+        holder.tvHandle.text = "@" + tweet.user?.screenName
+
         holder.tvTweetBody.text = tweet.body
 
         Glide.with(holder.itemView).load(tweet.user?.publicImageUrl).into(holder.ivProfileImage)
@@ -51,9 +56,12 @@ class TweetsAdapter(val tweets: ArrayList<Tweet>) : RecyclerView.Adapter<TweetsA
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val ivProfileImage = itemView.findViewById<ImageView>(R.id.ivProfileImage)
         val tvUserName = itemView.findViewById<TextView>(R.id.tvUsername)
+        val tvHandle = itemView.findViewById<TextView>(R.id.tvHandle)
         val tvTweetBody = itemView.findViewById<TextView>(R.id.tvTweetBody)
 
     }
+
+
 
 
 }

@@ -5,5 +5,7 @@
     <string name="login_label">Log in</string>
     <string name="intent_scheme">oauth</string>
     <string name="intent_host">cprest</string>
+    <string name="todo">TODO</string>
+    <string name="myhandle">/@myHandle</string>
 
 </resources>

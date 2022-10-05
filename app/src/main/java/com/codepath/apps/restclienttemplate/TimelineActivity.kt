@@ -1,8 +1,8 @@
 package com.codepath.apps.restclienttemplate
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -21,7 +21,10 @@ class TimelineActivity : AppCompatActivity() {
 
     lateinit var swipeContainer: SwipeRefreshLayout
 
+    private var scrollListener: EndlessRecyclerViewScrollListener? = null
+
     val tweets = ArrayList<Tweet>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,10 +49,22 @@ class TimelineActivity : AppCompatActivity() {
         rvTweets = findViewById(R.id.rvTweets)
         adapter = TweetsAdapter(tweets)
 
+
         rvTweets.layoutManager = LinearLayoutManager(this)
         rvTweets.adapter = adapter
 
         populateHomeTimeline()
+
+        scrollListener = object : EndlessRecyclerViewScrollListener(rvTweets.layoutManager as LinearLayoutManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                populateHomeTimeline()
+            }
+        }
+
+        rvTweets.addOnScrollListener(scrollListener as EndlessRecyclerViewScrollListener)
+
     }
 
     fun populateHomeTimeline() {
@@ -65,10 +80,13 @@ class TimelineActivity : AppCompatActivity() {
                     adapter.clear()
                     val listOfNewTweetsRetrieved = Tweet.fromJsonArray(jsonArray)
                     tweets.addAll(listOfNewTweetsRetrieved)
+
                     adapter.notifyDataSetChanged()
 
                     // Now we call setRefreshing(false) to signal refresh has finished
                     swipeContainer.setRefreshing(false)
+
+                    scrollListener?.resetState()
 
                 }catch (e: JSONException) {
                     Log.e(TAG, "JSON Exception $e")
