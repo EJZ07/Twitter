@@ -2,7 +2,9 @@ package com.codepath.apps.restclienttemplate
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -23,6 +25,8 @@ class ComposeActivity : AppCompatActivity() {
 
     lateinit var client: TwitterClient
 
+
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,28 +36,11 @@ class ComposeActivity : AppCompatActivity() {
 
         etCompose = findViewById(R.id.etTweetCompose)
 
-//        etValue.addTextChangedListener(object : TextWatcher {
-//            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-//                // Fires right as the text is being changed (even supplies the range of text)
-//                val length: Int = etValue.length()
-//                val convert = length.toString()
-//                etCompose.setText(convert)
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-//                // Fires right before text is changing
-//                val string = String
-//                etCompose.setText((s.length))
-//            }
-//
-//            override fun afterTextChanged(s: Editable) {
-//                // Fires right after the text has changed
-//                etValue.text = s.toString()
-//            }
-//        })
+
         btnTweet = findViewById(R.id.btnTweet)
 
         client = TwitterApplication.getRestClient(this)
+
 
         btnTweet.setOnClickListener {
             //Grab the content of the edit text (etCompose)

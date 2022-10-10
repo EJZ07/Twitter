@@ -47,6 +47,14 @@
                     android:scheme="@string/intent_scheme" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.codepath.ReceiveIntentDataActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.SEND"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+            <data android:mimeType="text/plain"></data>
+        </intent-filter>
+        </activity>
     </application>
 
 </manifest>
